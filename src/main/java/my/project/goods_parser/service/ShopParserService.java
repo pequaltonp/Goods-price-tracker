@@ -1,5 +1,5 @@
 package my.project.goods_parser.service;
 
-public interface ShopParseService {
+public interface ShopParserService {
     String parseByUrl(String url);
 }
