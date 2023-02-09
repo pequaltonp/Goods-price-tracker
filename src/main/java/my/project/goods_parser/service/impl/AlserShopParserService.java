@@ -14,19 +14,17 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AlserShopParserService implements ShopParserService {
 
-    private final String url = "https://alser.kz";
-
     @Override
-    public String parseByUrl(String url) {
-        url = "https://alser.kz/p/garnitura-aoc-gh200-dinamiki-50-mm-35mm-razem-18m";
+    public boolean parseByUrl(String url) {
         try {
             Document document = Jsoup.connect(url).get();
             System.out.println(document.getElementsByClass("detail-info__name").text());
             System.out.println(document.getElementsByClass("price").text());
+            return true;
         }
         catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-        return null;
+        return false;
     }
 }
