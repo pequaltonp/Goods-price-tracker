@@ -26,5 +26,6 @@ public class AlserShopParserService implements ShopParserService {
             log.error(e.getMessage(), e);
         }
         return false;
+
     }
 }
