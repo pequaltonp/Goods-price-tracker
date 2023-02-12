@@ -17,7 +17,7 @@ public class ParserController {
     @PostMapping("/add-to-queue")
     public ResponseEntity<String> addToQueue(@RequestParam("urlForParse") String url) {
         if (urlValidationService.shopDomainValidate(url)) {
-            return shopParserService.parseByUrl(url) ?
+            return shopParserService.addToQueue(url) ?
                     ResponseEntity.accepted().body("your request added to queue") :
                     ResponseEntity.internalServerError().body("request is not added for some reason");
         }

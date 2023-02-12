@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class AlserShopParserService implements ShopParserService {
 
     @Override
-    public boolean parseByUrl(String url) {
+    public boolean addToQueue(String url) {
         try {
             Document document = Jsoup.connect(url).get();
             System.out.println(document.getElementsByClass("detail-info__name").text());
@@ -26,6 +26,5 @@ public class AlserShopParserService implements ShopParserService {
             log.error(e.getMessage(), e);
         }
         return false;
-
     }
 }

@@ -10,11 +10,11 @@ public class UrlValidationServiceImpl implements UrlValidationService {
     @Override
     public boolean shopDomainValidate(String url) {
         String alserUrl = "https://alser.kz";
-        String technodomUrl = "";
-        String evrikaUrl = "";
-        String mechtaUrl = "";
-        String whiteVeterUrl = "";
-        String dnsUrl = "";
+        String technodomUrl = "https://www.technodom.kz";
+        String evrikaUrl = "https://evrika.com";
+        String mechtaUrl = "https://www.mechta.kz";
+        String whiteVeterUrl = "https://shop.kz/";
+        String dnsUrl = "https://www.dns-shop.kz/";
         return url.contains(alserUrl);
     }
 }
