@@ -17,4 +17,9 @@ public class EShopPropertyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String eshopName;
+    private String shopDomainUrl;
+    private String goodsNameTag;
+    private String goodsPriceTag;
+    private String notFoundTag;
 }
