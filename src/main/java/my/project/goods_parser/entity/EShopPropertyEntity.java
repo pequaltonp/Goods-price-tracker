@@ -12,11 +12,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "e-shop_property")
+@Table(name = "eshop_property")
 public class EShopPropertyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private String eshopName;
     private String shopDomainUrl;
     private String goodsNameTag;

@@ -1,20 +1,22 @@
 package my.project.goods_parser.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import my.project.goods_parser.model.EShopPropertyProjection;
+import my.project.goods_parser.repository.EShopPropertyRepository;
 import my.project.goods_parser.service.UrlValidationService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+@RequiredArgsConstructor
 @Service
 public class UrlValidationServiceImpl implements UrlValidationService {
+    private final EShopPropertyRepository shopPropertyRepository;
 
     @Override
-    public boolean shopDomainValidate(String url) {
-        String alserUrl = "https://alser.kz";
-        String technodomUrl = "https://www.technodom.kz";
-        String evrikaUrl = "https://evrika.com";
-        String mechtaUrl = "https://www.mechta.kz";
-        String whiteVeterUrl = "https://shop.kz/";
-        String dnsUrl = "https://www.dns-shop.kz/";
-        return url.contains(alserUrl);
+    public Optional<EShopPropertyProjection> shopDomainValidate(String url) {
+        return shopPropertyRepository.getAllEShopProperties().stream()
+                .filter(shop -> !url.isEmpty() && url.contains(shop.getShopDomainUrl()))
+                .findAny();
     }
 }
