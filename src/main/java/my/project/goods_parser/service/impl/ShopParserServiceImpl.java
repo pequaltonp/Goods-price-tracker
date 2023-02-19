@@ -8,6 +8,9 @@ import my.project.goods_parser.service.ShopParserService;
 import my.project.goods_parser.service.UrlValidationService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,9 +21,11 @@ public class ShopParserServiceImpl implements ShopParserService {
     @Override
     public boolean addToQueue(String url, EShopPropertyProjection shopPropertyProjection) {
         try {
-            Document document = Jsoup.connect(url).get();
-            System.out.println(document.getElementsByClass(shopPropertyProjection.getGoodsNameTag()).text());
-            System.out.println(document.getElementsByClass(shopPropertyProjection.getGoodsPriceTag()).text());
+            System.setProperty("webdriver.chrome.driver", "С:/chromedriver");
+            WebDriver driver = new ChromeDriver();
+            driver.get(url);
+            System.out.println(driver.findElement(By.className(shopPropertyProjection.getGoodsNameTag())).getText());
+            System.out.println(driver.findElement(By.className(shopPropertyProjection.getGoodsPriceTag())).getText());
             return true;
         }
         catch (Exception e) {
