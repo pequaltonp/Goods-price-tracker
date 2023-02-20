@@ -21,7 +21,7 @@ public class ShopParserServiceImpl implements ShopParserService {
     @Override
     public boolean addToQueue(String url, EShopPropertyProjection shopPropertyProjection) {
         try {
-            System.setProperty("webdriver.chrome.driver", "С:/chromedriver");
+            System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\Selenium driver");
             WebDriver driver = new ChromeDriver();
             driver.get(url);
             System.out.println(driver.findElement(By.className(shopPropertyProjection.getGoodsNameTag())).getText());
