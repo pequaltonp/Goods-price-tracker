@@ -103,9 +103,9 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <image>
-                        <name>idea_impl/price_parser-${project.artifactId}:${project.version}</name>
+                        <name>idea_impl/goods_price_parser-${project.artifactId}:${project.version}</name>
                     </image>
-
+                    <pullPolicy>IF_NOT_PRESENT</pullPolicy>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
