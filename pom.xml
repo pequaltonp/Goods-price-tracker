@@ -102,6 +102,10 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <image>
+                        <name>idea_impl/price_parser-${project.artifactId}:${project.version}</name>
+                    </image>
+
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
