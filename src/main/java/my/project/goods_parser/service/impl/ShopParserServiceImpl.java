@@ -16,7 +16,7 @@ import java.time.Duration;
 public class ShopParserServiceImpl implements ShopParserService {
 
     @Override
-    public boolean addToQueue(String url, EShopPropertyProjection shopPropertyProjection) {
+    public boolean parseShop(String url, EShopPropertyProjection shopPropertyProjection) {
         System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\SeleniumDriver\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions()
                 .addArguments("headless");

@@ -20,7 +20,7 @@ public class ParserController {
     public ResponseEntity<String> addToQueue(@RequestParam("urlForParse") String url) {
         Optional<EShopPropertyProjection> eShopPropertyProjection = urlValidationService.shopDomainValidate(url);
         if (eShopPropertyProjection.isPresent()) {
-            return shopParserService.addToQueue(url, eShopPropertyProjection.get()) ?
+            return shopParserService.parseShop(url, eShopPropertyProjection.get()) ?
                     ResponseEntity.accepted().body("your request added to queue") :
                     ResponseEntity.internalServerError().body("request is not added for some reason");
         }
