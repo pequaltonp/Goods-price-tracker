@@ -6,9 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface GoodsParseHistoryRepository extends JpaRepository<GoodsParseHistoryEntity, Long> {
     List<GoodsParseHistoryEntity> findGoodsParseHistoryEntitiesByParsedDate(LocalDate parsedDate);
     List<GoodsParseHistoryEntity> findGoodsParseHistoryEntitiesByGoodsName(String name);
+    Optional<GoodsParseHistoryEntity> findGoodsParseHistoryEntitiesById(long id);
 }
