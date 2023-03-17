@@ -25,5 +25,6 @@ public class GoodsParseHistoryEntity {
     private String goodsName;
     private BigDecimal price;
     private LocalDate parsedDate;
+    private long parseTaskId;
 
 }

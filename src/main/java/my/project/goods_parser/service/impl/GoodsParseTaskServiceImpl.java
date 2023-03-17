@@ -20,10 +20,14 @@ public class GoodsParseTaskServiceImpl implements GoodsParseTaskService {
 
     @Override
     public boolean addToQueue(GoodsParseTaskDto taskDto) {
+        if (parseTaskRepository.findShopParseTaskEntityByUrl(taskDto.getUrl())
+                .isPresent())
+            return false;
+
         return parseTaskRepository.save(ShopParseTaskEntity.builder()
                         .shopName(taskDto.getShopName())
                         .url(taskDto.getUrl())
-                        .lastParseDate(LocalDateTime.MIN)
+                        .lastParseDate(taskDto.getLastParseDate())
                         .build())
                 .getId() != 0;
     }

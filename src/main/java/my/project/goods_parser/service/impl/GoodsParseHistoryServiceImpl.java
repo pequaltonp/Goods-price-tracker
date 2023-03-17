@@ -51,6 +51,7 @@ public class GoodsParseHistoryServiceImpl implements GoodsParseHistoryService {
                 .price(parseHistoryDto.getPrice())
                 .goodsName(parseHistoryDto.getGoodsName())
                 .parsedDate(parseHistoryDto.getParsedDate())
+                .parseTaskId(parseHistoryDto.getParseTaskId())
                 .build();
     }
 
@@ -60,6 +61,7 @@ public class GoodsParseHistoryServiceImpl implements GoodsParseHistoryService {
                 .price(parseHistory.getPrice())
                 .goodsName(parseHistory.getGoodsName())
                 .parsedDate(parseHistory.getParsedDate())
+                .parseTaskId(parseHistory.getParseTaskId())
                 .build();
     }
 }
