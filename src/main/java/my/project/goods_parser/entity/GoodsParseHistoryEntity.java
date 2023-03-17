@@ -17,7 +17,10 @@ import java.time.LocalDate;
 @Table(name = "goods_parse_history")
 public class GoodsParseHistoryEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "goods_info_pk_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "parse_history_generator")
+    @SequenceGenerator(name = "parse_history_generator",
+            sequenceName = "goods_info_pk_id_seq")
     private long id;
     private String goodsName;
     private BigDecimal price;

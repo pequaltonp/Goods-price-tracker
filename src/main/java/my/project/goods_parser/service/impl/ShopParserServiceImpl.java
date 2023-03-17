@@ -1,7 +1,7 @@
 package my.project.goods_parser.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import my.project.goods_parser.model.EShopPropertyProjection;
+import my.project.goods_parser.model.ShopPropertyDto;
 import my.project.goods_parser.service.ShopParserService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,7 +16,7 @@ import java.time.Duration;
 public class ShopParserServiceImpl implements ShopParserService {
 
     @Override
-    public boolean parseShop(String url, EShopPropertyProjection shopPropertyProjection) {
+    public boolean parseShop(String url, ShopPropertyDto shopPropertyProjection) {
         System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\SeleniumDriver\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions()
                 .addArguments("headless");
