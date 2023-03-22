@@ -20,7 +20,8 @@ public class GoodsParseHistoryEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "parse_history_generator")
     @SequenceGenerator(name = "parse_history_generator",
-            sequenceName = "goods_info_pk_id_seq")
+            sequenceName = "eshop_price_tracker_db.public.goods_info_pk_id_seq",
+            allocationSize = 1)
     private long id;
     private String goodsName;
     private BigDecimal price;

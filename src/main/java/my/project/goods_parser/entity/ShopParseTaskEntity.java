@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,7 +20,8 @@ public class ShopParseTaskEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "parse_task_generator")
     @SequenceGenerator(name = "parse_task_generator",
-            sequenceName = "parse_task_id_seq")
+            sequenceName = "eshop_price_tracker_db.public.parse_task_id_seq",
+            allocationSize = 1)
     private long id;
     private String url;
     private String shopName;
