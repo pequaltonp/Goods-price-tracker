@@ -29,7 +29,7 @@ public class ShopParseTaskEntity {
     private String url;
     private String shopName;
     private LocalDateTime lastParseDate;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "shopParseTask")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "shopParseTask", fetch = FetchType.EAGER)
     private List<GoodsParseHistoryEntity> parseHistoryEntityList = new ArrayList<>();
 
     public void addParseHistory(GoodsParseHistoryEntity parseHistory) {

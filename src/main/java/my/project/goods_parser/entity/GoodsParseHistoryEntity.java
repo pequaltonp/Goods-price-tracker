@@ -1,9 +1,6 @@
 package my.project.goods_parser.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Entity
+@ToString(exclude = "shopParseTask")
 @Table(name = "goods_parse_history")
 public class GoodsParseHistoryEntity {
     @Id
@@ -26,7 +24,7 @@ public class GoodsParseHistoryEntity {
     private String goodsName;
     private BigDecimal price;
     private LocalDate parsedDate;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "parse_task_id")
     private ShopParseTaskEntity shopParseTask;
 

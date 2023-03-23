@@ -16,14 +16,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
+@Component
 public class ParseEshopTaskScheduler {
     private final ShopPropertyService shopPropertyService;
     private final ShopParseTaskRepository shopParseTaskRepository;
@@ -32,7 +35,8 @@ public class ParseEshopTaskScheduler {
     public void taskToParse() {
         System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\SeleniumDriver\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions()
-                .addArguments("headless");
+                .addArguments("headless")
+                .addArguments("--remote-allow-origins=*");
         List<ShopParseTaskEntity> parseTaskEntityList = shopParseTaskRepository.findShopParseTaskEntitiesByPriority();
 
         parseTaskEntityList.forEach(parseTask -> {
@@ -46,15 +50,17 @@ public class ParseEshopTaskScheduler {
 
                         String goodsName = driver.findElement(By.cssSelector(shopPropertyDto.getGoodsNameTag())).getText();
                         String price = driver.findElement(By.cssSelector(shopPropertyDto.getGoodsPriceTag())).getText();
-
                         log.info(goodsName);
                         log.info(price);
 
                         parseTask.addParseHistory(GoodsParseHistoryEntity.builder()
                                 .parsedDate(LocalDate.now())
                                 .goodsName(goodsName)
-                                .price(new BigDecimal(price))
+                                .price(new BigDecimal(price.replaceAll("\\D*", "")))
                                 .build());
+
+                        parseTask.setLastParseDate(LocalDateTime.now());
+                        shopParseTaskRepository.save(parseTask);
 
                         driver.quit();
                     } catch (Exception e) {
