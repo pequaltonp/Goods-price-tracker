@@ -17,5 +17,5 @@ public class GoodsParseHistoryDto {
     private String goodsName;
     private BigDecimal price;
     private LocalDate parsedDate;
-    private long parseTaskId;
+    private GoodsParseTaskDto parseTaskDto;
 }

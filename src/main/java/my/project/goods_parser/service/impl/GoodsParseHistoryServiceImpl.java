@@ -3,7 +3,9 @@ package my.project.goods_parser.service.impl;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import my.project.goods_parser.entity.GoodsParseHistoryEntity;
+import my.project.goods_parser.entity.ShopParseTaskEntity;
 import my.project.goods_parser.model.GoodsParseHistoryDto;
+import my.project.goods_parser.model.GoodsParseTaskDto;
 import my.project.goods_parser.repository.GoodsParseHistoryRepository;
 import my.project.goods_parser.service.GoodsParseHistoryService;
 import org.springframework.stereotype.Service;
@@ -51,17 +53,22 @@ public class GoodsParseHistoryServiceImpl implements GoodsParseHistoryService {
                 .price(parseHistoryDto.getPrice())
                 .goodsName(parseHistoryDto.getGoodsName())
                 .parsedDate(parseHistoryDto.getParsedDate())
-                .parseTaskId(parseHistoryDto.getParseTaskId())
                 .build();
     }
 
     private GoodsParseHistoryDto entityToModel(@NonNull GoodsParseHistoryEntity parseHistory) {
+        ShopParseTaskEntity entity = parseHistory.getShopParseTask();
         return GoodsParseHistoryDto.builder()
                 .id(parseHistory.getId())
                 .price(parseHistory.getPrice())
                 .goodsName(parseHistory.getGoodsName())
                 .parsedDate(parseHistory.getParsedDate())
-                .parseTaskId(parseHistory.getParseTaskId())
+                .parseTaskDto(entity == null ? new GoodsParseTaskDto() : GoodsParseTaskDto.builder()
+                        .id(entity.getId())
+                        .lastParseDate(entity.getLastParseDate())
+                        .url(entity.getUrl())
+                        .shopName(entity.getShopName())
+                        .build())
                 .build();
     }
 }

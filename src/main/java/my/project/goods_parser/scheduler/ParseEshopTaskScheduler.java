@@ -2,9 +2,12 @@ package my.project.goods_parser.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import my.project.goods_parser.entity.GoodsParseHistoryEntity;
+import my.project.goods_parser.entity.ShopParseTaskEntity;
 import my.project.goods_parser.model.GoodsParseHistoryDto;
 import my.project.goods_parser.model.GoodsParseTaskDto;
 import my.project.goods_parser.model.ShopPropertyDto;
+import my.project.goods_parser.repository.ShopParseTaskRepository;
 import my.project.goods_parser.service.GoodsParseHistoryService;
 import my.project.goods_parser.service.GoodsParseTaskService;
 import my.project.goods_parser.service.ShopPropertyService;
@@ -23,17 +26,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ParseEshopTaskScheduler {
     private final ShopPropertyService shopPropertyService;
-    private final GoodsParseTaskService parseTaskService;
-    private final GoodsParseHistoryService goodsParseHistoryService;
+    private final ShopParseTaskRepository shopParseTaskRepository;
 
     @Scheduled(fixedDelay = 2000)
     public void taskToParse() {
         System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\SeleniumDriver\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions()
                 .addArguments("headless");
-        List<GoodsParseTaskDto> parseTaskDtoList = parseTaskService.getLast10NotParsedTaskByDateTime();
+        List<ShopParseTaskEntity> parseTaskEntityList = shopParseTaskRepository.findShopParseTaskEntitiesByPriority();
 
-        parseTaskDtoList.forEach(parseTask -> {
+        parseTaskEntityList.forEach(parseTask -> {
                     try {
                         WebDriver driver = new ChromeDriver(options);
                         driver.get(parseTask.getUrl());
@@ -48,11 +50,10 @@ public class ParseEshopTaskScheduler {
                         log.info(goodsName);
                         log.info(price);
 
-                        goodsParseHistoryService.saveGoodsParseHistory(GoodsParseHistoryDto.builder()
-                                        .goodsName(goodsName)
-                                        .price(new BigDecimal(price))
-                                        .parsedDate(LocalDate.now())
-                                        .parseTaskId(parseTask.getId())
+                        parseTask.addParseHistory(GoodsParseHistoryEntity.builder()
+                                .parsedDate(LocalDate.now())
+                                .goodsName(goodsName)
+                                .price(new BigDecimal(price))
                                 .build());
 
                         driver.quit();

@@ -26,7 +26,7 @@ public class ParserController {
         Optional<ShopPropertyDto> shopProperty = shopPropertyService.shopDomainValidate(url);
         if (shopProperty.isPresent())
             return parseTaskService.addToQueue(GoodsParseTaskDto.builder()
-                            .lastParseDate(LocalDateTime.MIN)
+                            .lastParseDate(LocalDateTime.of(2023, 3, 1, 12, 0))
                             .shopName(shopProperty.get().getEshopName())
                             .url(url)
                     .build()) ?

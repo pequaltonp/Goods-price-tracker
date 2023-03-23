@@ -2,7 +2,9 @@ package my.project.goods_parser.service.impl;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import my.project.goods_parser.entity.GoodsParseHistoryEntity;
 import my.project.goods_parser.entity.ShopParseTaskEntity;
+import my.project.goods_parser.model.GoodsParseHistoryDto;
 import my.project.goods_parser.model.GoodsParseTaskDto;
 import my.project.goods_parser.repository.ShopParseTaskRepository;
 import my.project.goods_parser.service.GoodsParseTaskService;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Nonnull;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -33,6 +36,19 @@ public class GoodsParseTaskServiceImpl implements GoodsParseTaskService {
     }
 
     @Override
+    public void addParseHistory(long taskId, GoodsParseHistoryDto parseHistoryDto) {
+        Optional<ShopParseTaskEntity> taskEntityOptional = parseTaskRepository.findById(taskId);
+        if (taskEntityOptional.isPresent()) {
+            ShopParseTaskEntity taskEntity = taskEntityOptional.get();
+            taskEntity.addParseHistory(GoodsParseHistoryEntity.builder()
+                            .parsedDate(parseHistoryDto.getParsedDate())
+                            .goodsName(parseHistoryDto.getGoodsName())
+                            .price(parseHistoryDto.getPrice())
+                    .build());
+        }
+    }
+
+    @Override
     public List<GoodsParseTaskDto> getParsedTaskByShopName(@NonNull String shopName) {
         return parseTaskRepository.findShopParseTaskEntitiesByShopName(shopName).stream()
                 .map(this::entityToModel)
@@ -44,13 +60,6 @@ public class GoodsParseTaskServiceImpl implements GoodsParseTaskService {
         return parseTaskRepository.findShopParseTaskEntityByUrl(url)
                 .map(this::entityToModel)
                 .orElseGet(GoodsParseTaskDto::new);
-    }
-
-    @Override
-    public List<GoodsParseTaskDto> getLast10NotParsedTaskByDateTime() {
-        return parseTaskRepository.findShopParseTaskEntitiesByLastParseDateBefore(LocalDateTime.now()).stream()
-                .map(this::entityToModel)
-                .collect(Collectors.toList());
     }
 
     private GoodsParseTaskDto entityToModel(ShopParseTaskEntity entity) {
