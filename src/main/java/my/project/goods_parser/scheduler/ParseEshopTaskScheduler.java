@@ -23,6 +23,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class ParseEshopTaskScheduler {
     private final ShopPropertyService shopPropertyService;
     private final ShopParseTaskRepository shopParseTaskRepository;
 
-    @Scheduled(fixedDelay = 2000)
+    @Scheduled(fixedDelay = 2, timeUnit = TimeUnit.MINUTES)
     public void taskToParse() {
         System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\SeleniumDriver\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions()
