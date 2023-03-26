@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface ShopParseTaskRepository extends JpaRepository<ShopParseTaskEntity, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM shop_parse_task " +
-            "WHERE last_parse_date < localtimestamp - time '3 hour'")
+            "WHERE last_parse_date < localtimestamp - interval '3 hour'")
     List<ShopParseTaskEntity> findShopParseTaskEntitiesByPriority();
     List<ShopParseTaskEntity> findShopParseTaskEntitiesByShopName(String shopName);
     Optional<ShopParseTaskEntity> findShopParseTaskEntityByUrl(String url);
