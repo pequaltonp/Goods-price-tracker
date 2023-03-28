@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -23,7 +23,7 @@ public class GoodsParseHistoryEntity {
     private long id;
     private String goodsName;
     private BigDecimal price;
-    private LocalDate parsedDate;
+    private LocalDateTime parsedDateTime;
     @ManyToOne
     @JoinColumn(name = "parse_task_id")
     private ShopParseTaskEntity shopParseTask;

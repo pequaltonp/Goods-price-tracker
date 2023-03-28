@@ -10,7 +10,7 @@ import my.project.goods_parser.repository.GoodsParseHistoryRepository;
 import my.project.goods_parser.service.GoodsParseHistoryService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +32,8 @@ public class GoodsParseHistoryServiceImpl implements GoodsParseHistoryService {
     }
 
     @Override
-    public List<GoodsParseHistoryDto> getGoodsParseHistoryByParsedDate(LocalDate parsedDate) {
-        return parseHistoryRepository.findGoodsParseHistoryEntitiesByParsedDate(parsedDate).stream()
+    public List<GoodsParseHistoryDto> getGoodsParseHistoryByParsedDateTime(LocalDateTime parsedDate) {
+        return parseHistoryRepository.findGoodsParseHistoryEntitiesByParsedDateTime(parsedDate).stream()
                 .map(this::entityToModel)
                 .collect(Collectors.toList());
     }
@@ -52,7 +52,7 @@ public class GoodsParseHistoryServiceImpl implements GoodsParseHistoryService {
                 .id(parseHistoryDto.getId())
                 .price(parseHistoryDto.getPrice())
                 .goodsName(parseHistoryDto.getGoodsName())
-                .parsedDate(parseHistoryDto.getParsedDate())
+                .parsedDateTime(parseHistoryDto.getParsedDateTime())
                 .build();
     }
 
@@ -62,7 +62,7 @@ public class GoodsParseHistoryServiceImpl implements GoodsParseHistoryService {
                 .id(parseHistory.getId())
                 .price(parseHistory.getPrice())
                 .goodsName(parseHistory.getGoodsName())
-                .parsedDate(parseHistory.getParsedDate())
+                .parsedDateTime(parseHistory.getParsedDateTime())
                 .parseTaskDto(entity == null ? new GoodsParseTaskDto() : GoodsParseTaskDto.builder()
                         .id(entity.getId())
                         .lastParseDate(entity.getLastParseDate())
