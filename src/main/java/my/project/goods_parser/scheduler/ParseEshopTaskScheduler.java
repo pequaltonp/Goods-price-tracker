@@ -56,7 +56,7 @@ public class ParseEshopTaskScheduler {
                         log.info(price);
 
                         parseTask.getParseHistoryEntityList().stream()
-                                .min(Comparator.comparing(GoodsParseHistoryEntity::getParsedDateTime))
+                                .max(Comparator.comparing(GoodsParseHistoryEntity::getParsedDateTime))
                                 .ifPresentOrElse(parseHistory -> {
                                     BigDecimal parsedPrice = new BigDecimal(price.replaceAll("\\D*", ""));
                                     if (parseHistory.getPrice().compareTo(parsedPrice) != 0)
