@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -54,11 +55,17 @@ public class ParseEshopTaskScheduler {
                         log.info(goodsName);
                         log.info(price);
 
-                        parseTask.addParseHistory(GoodsParseHistoryEntity.builder()
-                                .parsedDateTime(LocalDateTime.now())
-                                .goodsName(goodsName)
-                                .price(new BigDecimal(price.replaceAll("\\D*", "")))
-                                .build());
+                        parseTask.getParseHistoryEntityList().stream()
+                                .min(Comparator.comparing(GoodsParseHistoryEntity::getParsedDateTime))
+                                .ifPresentOrElse(parseHistory -> {
+                                    BigDecimal parsedPrice = new BigDecimal(price.replaceAll("\\D*", ""));
+                                    if (parseHistory.getPrice().compareTo(parsedPrice) != 0)
+                                        parseTask.addParseHistory(GoodsParseHistoryEntity.builder()
+                                                        .parsedDateTime(LocalDateTime.now())
+                                                        .goodsName(goodsName)
+                                                        .price(parsedPrice)
+                                                .build());
+                                }, () -> log.info(String.format("ParseHistory for task id = %d is empty", parseTask.getId())));
 
                         parseTask.setLastParseDate(LocalDateTime.now());
                         shopParseTaskRepository.save(parseTask);

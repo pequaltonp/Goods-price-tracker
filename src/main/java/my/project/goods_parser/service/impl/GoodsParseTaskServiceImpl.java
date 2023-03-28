@@ -41,7 +41,7 @@ public class GoodsParseTaskServiceImpl implements GoodsParseTaskService {
         if (taskEntityOptional.isPresent()) {
             ShopParseTaskEntity taskEntity = taskEntityOptional.get();
             taskEntity.addParseHistory(GoodsParseHistoryEntity.builder()
-                            .parsedDate(parseHistoryDto.getParsedDate())
+                            .parsedDateTime(parseHistoryDto.getParsedDateTime())
                             .goodsName(parseHistoryDto.getGoodsName())
                             .price(parseHistoryDto.getPrice())
                     .build());
