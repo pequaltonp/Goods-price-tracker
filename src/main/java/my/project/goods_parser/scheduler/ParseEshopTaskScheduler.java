@@ -55,7 +55,7 @@ public class ParseEshopTaskScheduler {
                         log.info(price);
 
                         parseTask.addParseHistory(GoodsParseHistoryEntity.builder()
-                                .parsedDate(LocalDate.now())
+                                .parsedDateTime(LocalDateTime.now())
                                 .goodsName(goodsName)
                                 .price(new BigDecimal(price.replaceAll("\\D*", "")))
                                 .build());
